@@ -11,7 +11,24 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "phoenix_html"
+import "phoenix_html";
+import Vue from 'vue';
+import MyApp from '../js/my-app.vue'
+
+Vue.component('my-app', MyApp)
+
+new Vue({
+    el: '#app',
+    data() {
+      return {
+        // state for the top level component, e.g
+        currentMessage: "Hello World"
+      }
+    },
+    render: function (createElement) {
+      return createElement(MyApp, {})
+    }
+  });
 
 // Import local files
 //
