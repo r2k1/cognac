@@ -40,7 +40,10 @@ defmodule Cognac.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.13.1"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:credo, "~> 0.3", only: [:dev, :test]},
+      {:httpoison, "~> 0.13"},
+      {:floki, "~> 0.18.0"}
     ]
   end
 
