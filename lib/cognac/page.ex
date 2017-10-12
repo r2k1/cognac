@@ -5,6 +5,7 @@ defmodule Cognac.Page do
 
 
   schema "pages" do
+    field :body, :string
     field :status_code, :integer
     field :url, :string
     field :visited_at, :naive_datetime
@@ -16,7 +17,7 @@ defmodule Cognac.Page do
   @doc false
   def changeset(%Page{} = page, attrs) do
     page
-    |> cast(attrs, [:url, :status_code, :visited_at])
+    |> cast(attrs, [:url, :status_code, :visited_at, :body])
     |> validate_required([:url, :status_code, :visited_at])
   end
 end
