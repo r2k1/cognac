@@ -17,6 +17,6 @@ defmodule Cognac.Product do
   def changeset(%Product{} = product, attrs) do
     product
     |> cast(attrs, [:name, :model_number, :image_url, :body])
-    |> validate_required([:name, :model_number, :image_url, :body])
+    |> validate_required([:name, :model_number, :body])
   end
 end

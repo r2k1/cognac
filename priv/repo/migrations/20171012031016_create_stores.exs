@@ -5,7 +5,7 @@ defmodule Cognac.Repo.Migrations.CreateStores do
     create table(:stores) do
       add :name, :string
       add :host, :string
-      add :home_page, :string
+      add :homepage, :string, size: 2000
 
       timestamps()
     end

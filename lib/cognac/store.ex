@@ -7,7 +7,7 @@ defmodule Cognac.Store do
   schema "stores" do
     field :host, :string
     field :name, :string
-    field :home_page, :string
+    field :homepage, :string
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule Cognac.Store do
   @doc false
   def changeset(%Store{} = store, attrs) do
     store
-    |> cast(attrs, [:name, :host, :home_page])
-    |> validate_required([:name, :host, :home_page])
+    |> cast(attrs, [:name, :host, :homepage])
+    |> validate_required([:name, :host, :homepage])
   end
 end
