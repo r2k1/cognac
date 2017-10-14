@@ -12,14 +12,16 @@ defmodule Crawler.ProductBuilder do
   end
 
   defp product_number(html) do
-    Floki.find(html, "#out_container [itemprop=\"mpn\"]") 
+    Floki.find(html, "[itemprop=\"mpn\"]") 
+    |> Enum.at(0)
     |> Floki.text
     |> String.trim
   end
 
   defp name(html) do
     html
-    |> Floki.find("#out_container h1")
+    |> Floki.find("h1")
+    |> Enum.at(0)
     |> Floki.text
     |> String.trim
   end

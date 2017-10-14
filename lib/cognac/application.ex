@@ -1,5 +1,8 @@
 defmodule Cognac.Application do
   use Application
+  @moduledoc """
+  Main entry point for application
+  """
 
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications

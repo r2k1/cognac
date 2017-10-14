@@ -1,0 +1,7 @@
+  <table>
+    <%= for product <- @products do %>
+      <tr>
+        <td><%= link product.name, to: product_path(@conn, :show, product) %><td>
+      </tr>
+    <% end %>
+  </table>
