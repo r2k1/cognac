@@ -18,5 +18,6 @@ defmodule Cognac.Products do
   def get_product!(id) do
     Product
     |> Repo.get!(id)
+    |> Repo.preload(:prices)
   end
 end

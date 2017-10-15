@@ -9,6 +9,7 @@ defmodule Cognac.Product do
     field :image_url, :string
     field :model_number, :string
     field :name, :string
+    has_many :prices, Cognac.Product.Price
 
     timestamps()
   end
