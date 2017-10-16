@@ -42,6 +42,7 @@ defmodule Cognac.Mixfile do
       {:gettext, "~> 0.13.1"},
       {:cowboy, "~> 1.0"},
       {:credo, "~> 0.3", only: [:dev, :test]},
+      {:httparrot, "~> 1.0", only: :test},
       {:httpoison, "~> 0.13"},
       {:floki, "~> 0.18.0"}
     ]

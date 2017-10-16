@@ -7,6 +7,7 @@ defmodule Cognac.Repo.Migrations.CreatePages do
       add :status_code, :integer, null: false
       add :visited_at, :naive_datetime, null: false
       add :body, :text
+      add :headers, :map
       add :store_id, references(:stores, on_delete: :nothing)
 
       timestamps()
