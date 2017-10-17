@@ -8,7 +8,7 @@ defmodule Crawler.ProductBuilder do
     Logger.info "Page id: #{page.id}"
     html = page.body
     product = Cognac.Repo.insert!(%Cognac.Product{
-      model_number: product_number(html),
+      versions: [product_number(html)],
       name: name(html)
     })
     Cognac.Repo.insert!(%Cognac.Product.Price{

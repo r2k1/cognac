@@ -4,9 +4,10 @@ defmodule Cognac.Repo.Migrations.CreateProducts do
   def change do
     create table(:products) do
       add :name, :string
-      add :model_number, :string
+      add :versions, {:array, :string}
       add :image_url, :string
       add :body, :string
+      add :page_id, references(:pages, on_delete: :nilify_all)
 
       timestamps()
     end

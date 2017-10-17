@@ -20,4 +20,11 @@ defmodule Cognac.Products do
     |> Repo.get!(id)
     |> Repo.preload(:prices)
   end
+
+  def insert_or_update_product(attrs) do
+    query = from p in Cognac.Product, where: p.name == ^attrs.name
+    product = Cognac.Repo.one(query) || %Cognac.Product{}    
+    changeset = Cognac.Product.changeset(product, attrs)
+    Cognac.Repo.insert_or_update!(changeset)
+  end
 end

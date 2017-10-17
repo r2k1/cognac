@@ -7,9 +7,10 @@ defmodule Cognac.Product do
   schema "products" do
     field :body, :string
     field :image_url, :string
-    field :model_number, :string
+    field :versions, {:array, :string}
     field :name, :string
     has_many :prices, Cognac.Product.Price
+    belongs_to :page, Cognac.Page
 
     timestamps()
   end
@@ -17,7 +18,7 @@ defmodule Cognac.Product do
   @doc false
   def changeset(%Product{} = product, attrs) do
     product
-    |> cast(attrs, [:name, :model_number, :image_url, :body])
-    |> validate_required([:name, :model_number, :body])
+    |> cast(attrs, [:name, :versions, :image_url, :body, :page_id])
+    |> validate_required([:name])
   end
 end
