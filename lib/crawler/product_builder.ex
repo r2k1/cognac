@@ -20,11 +20,14 @@ defmodule Crawler.ProductBuilder do
   end
 
   def product_number(html) do
-    case Floki.find(html, "[itemprop=\"mpn\"]") |> Enum.fetch(0) do
-      :error -> nil
-      {:ok, element} ->
-        element |> Floki.text |> String.trim
-    end
+    "[itemprop=\"mpn\"]"
+    |> Floki.find(html)
+    |> Enum.fetch(0)
+    |> case do
+        :error -> nil
+        {:ok, element} ->
+          element |> Floki.text |> String.trim
+      end
   end
 
   defp name(html) do
@@ -40,7 +43,7 @@ defmodule Crawler.ProductBuilder do
   end
 
   defp amount(html) do
-    text = html
+    html
     |> Floki.find(".ginc .dollars")
     |> Enum.at(0)
     |> Floki.text

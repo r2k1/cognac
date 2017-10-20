@@ -73,8 +73,8 @@ defmodule Crawler.PageLoader do
 
   defp update_or_create_page(response) do
     query = from p in Cognac.Page, where: p.url == ^response.request_url
-    page = Cognac.Repo.one(query) || %Cognac.Page{}
-    Cognac.Page.changeset(page, %{
+    Cognac.Repo.one(query) || %Cognac.Page{}
+    |> Cognac.Page.changeset(%{
       status_code: response.status_code,
       url: response.request_url,
       body: strip_utf(response.body),

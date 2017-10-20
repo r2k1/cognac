@@ -16,8 +16,9 @@ defmodule Crawler.GSMArena.ProductLoader do
       {:error, _} -> nil
       {:ok, page} ->
         html = page.body
-        name = Floki.find(html, "h1") |> Floki.text |> String.trim
-        versions = Floki.find(html, "[data-version]:not([data-version='*'])")
+        name = html |> Floki.find("h1") |> Floki.text |> String.trim
+        versions = html
+                   |> Floki.find("[data-version]:not([data-version='*'])")
                    |> Enum.map(&Floki.text/1)
                    |> Enum.map(&String.trim/1)
         Cognac.Products.insert_or_update_product(%{
@@ -29,7 +30,8 @@ defmodule Crawler.GSMArena.ProductLoader do
   end
 
   def product_urls do
-    category_page_urls("https://www.gsmarena.com/makers.php3")
+    "https://www.gsmarena.com/makers.php3"
+    |> category_page_urls()
     |> Enum.flat_map(&product_list_page_urls/1)
     |> Enum.flat_map(&product_page_urls/1)
   end

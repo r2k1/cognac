@@ -46,8 +46,6 @@ defmodule Crawler.PbTech do
   #   end
   # end
 
-  
-  # TODO: Throttle?
   def android_skus do
     ['https://www.pbtech.co.nz/category/phones-gps/smartphones/android-phones']
     |> Enum.map(&(HTTPoison.get!(&1).body))
