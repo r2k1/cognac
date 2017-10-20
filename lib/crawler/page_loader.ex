@@ -42,7 +42,7 @@ defmodule Crawler.PageLoader do
   """
   @spec load(binary) :: response
   def load(url) do
-    case HTTPoison.get(url, %{}, hackney: [follow_redirect: true]) do
+    case HTTPoison.get(url, %{}, hackney: [follow_redirect: true, pool: :default]) do
       {:ok, response} -> proccess_response(response)
       {:error, error} -> {:error, error.reason}
     end

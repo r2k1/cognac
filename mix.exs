@@ -44,7 +44,8 @@ defmodule Cognac.Mixfile do
       {:credo, "~> 0.3", only: [:dev, :test]},
       {:httparrot, "~> 1.0", only: :test},
       {:httpoison, "~> 0.13"},
-      {:floki, "~> 0.18.0"}
+      {:floki, "~> 0.18.0"},
+      {:poolboy, "~> 1.5.1"}      
     ]
   end
 
