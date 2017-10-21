@@ -63,6 +63,7 @@ defmodule Crawler.PageLoader do
     end
   end
 
+  @spec proccess_response(HTTPoison.Response.t) :: {:ok, Cognac.Page.t} | {:error, atom} 
   defp proccess_response(response) do
     case response.status_code do
       x when x < 200 or x >= 300 -> {:error, :unsuccessful_response}
@@ -71,6 +72,7 @@ defmodule Crawler.PageLoader do
     end
   end
 
+  @spec update_or_create_page(HTTPoison.Response.t) :: Cognac.Page.t
   defp update_or_create_page(response) do
     query = from p in Cognac.Page, where: p.url == ^response.request_url
     Cognac.Repo.one(query) || %Cognac.Page{}
@@ -90,12 +92,15 @@ defmodule Crawler.PageLoader do
     |> Enum.reduce(%{}, fn(x, acc) -> Map.put(acc, elem(x, 0), elem(x, 1)) end)
   end
 
+  @spec find_page(binary) :: Cognac.Page.t | nil
   defp find_page(url) do
     query = from p in Cognac.Page,
             where: p.url == ^url
     Cognac.Repo.one(query)
   end
 
+  @doc "return sting without invalid unicode symbols"
+  @spec strip_utf(binary) :: binary
   def strip_utf(str) do
     strip_utf_helper(str, [])
   end
