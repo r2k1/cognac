@@ -10,7 +10,8 @@ defmodule Cognac.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      dialyzer: [plt_add_deps: :transitive]
     ]
   end
 
@@ -45,7 +46,8 @@ defmodule Cognac.Mixfile do
       {:httparrot, "~> 1.0", only: :test},
       {:httpoison, "~> 0.13"},
       {:floki, "~> 0.18.0"},
-      {:poolboy, "~> 1.5.1"}      
+      {:poolboy, "~> 1.5.1"},
+      {:dialyxir, "~> 0.5.0", only: [:dev], runtime: false}
     ]
   end
 

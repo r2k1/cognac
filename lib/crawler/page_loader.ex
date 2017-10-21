@@ -12,7 +12,7 @@ defmodule Crawler.PageLoader do
 
   On success caches the result for the future requests
   """
-  @spec load(binary) :: response
+  @spec get(binary) :: response
   def get(url) do
     case find_page(url) do
       nil -> 
@@ -28,7 +28,7 @@ defmodule Crawler.PageLoader do
   Works exactly as `get/1` but returns only result
   Raises an exception in case of HTTP error
   """
-  @spec load(binary) :: response
+  @spec get!(binary) :: Cognac.Page.t
   def get!(url) do
     case get(url) do
       {:error, error} -> raise Atom.to_string(error)
@@ -55,7 +55,7 @@ defmodule Crawler.PageLoader do
   response in case of a successful request, raising an exception in case the
   request fails.
   """
-  @spec load(binary) :: response
+  @spec load!(binary) :: Cognac.Page.t
   def load!(url) do
     case load(url) do
       {:error, error} -> raise error
