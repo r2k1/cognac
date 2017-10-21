@@ -11,6 +11,7 @@ defmodule Cognac.Product do
     field :name, :string
     has_many :prices, Cognac.Product.Price
     belongs_to :page, Cognac.Page
+    belongs_to :category, Cognac.Category
 
     timestamps()
   end
