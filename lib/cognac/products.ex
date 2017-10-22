@@ -27,4 +27,18 @@ defmodule Cognac.Products do
     changeset = Cognac.Product.changeset(product, attrs)
     Cognac.Repo.insert_or_update!(changeset)
   end
+
+  @doc """
+  Performs a fuzzy search on name field
+  """
+  @spec find_by_name(binary) :: Product.t | nil
+  def find_by_name(name) do
+    name = String.downcase(name)
+    # TODO: extract levenshtein function
+    query = from p in Cognac.Product,
+            limit: 1,
+            where: fragment("levenshtein(lower(?), ?, 1, 2, 5)", p.name, ^name) < 20,
+            order_by: [asc: fragment("levenshtein(lower(?), ?, 1, 2, 5)", p.name, ^name)]
+    Cognac.Repo.one(query)
+  end
 end

@@ -1,6 +1,6 @@
 defmodule Cognac.CategoryTest do
-  use Cognac.ModelCase
-
+  use ExUnit.Case
+  use Cognac.DataCase
   alias Cognac.Category
 
   @valid_attrs %{body: "some body", name: "some name"}
