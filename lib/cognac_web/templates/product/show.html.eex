@@ -8,6 +8,7 @@
 <table>
   <%= for price <- @product.prices do %>
     <tr>
+      <td><%= price.store.name %></td>
       <td><%= price.amount %></td>
     </tr>
   <% end %>

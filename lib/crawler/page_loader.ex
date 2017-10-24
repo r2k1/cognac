@@ -58,7 +58,7 @@ defmodule Crawler.PageLoader do
   @spec load!(binary) :: Cognac.Page.t
   def load!(url) do
     case load(url) do
-      {:error, error} -> raise error
+      {:error, error} -> raise "Error during loading #{url}"
       {:ok, result} -> result  
     end
   end

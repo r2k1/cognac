@@ -2,7 +2,9 @@ defmodule Crawler.PBSeed do
   require Logger
   @hostname "https://www.pbtech.co.nz/"
   def seed do
-    Enum.map(categories(), &load_category/1)
+    categories()
+    |> Enum.map(&load_category/1)
+    |> Crawler.PageLoader.get!
   end
 
   defp categories do
@@ -24,7 +26,6 @@ defmodule Crawler.PBSeed do
     |> Floki.find(".item_line_name")
     |> Floki.attribute("href")
     |> Enum.map(&url/1)
-    |> Enum.map(&insert_page/1)
   end
 
   defp insert_page(url) do
