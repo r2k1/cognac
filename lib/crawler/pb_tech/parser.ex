@@ -22,7 +22,7 @@ defmodule Crawler.PBTech.Parser do
   @spec amount(binary) :: float
   def amount(html) do
     html |> Floki.find(".cost_wrap .ginc .dollars") |> Enum.at(0) |> Floki.text |> String.trim
-    |> String.replace(~r/[^0-9.]/, "") |> String.to_float
+    |> String.replace(~r/[^0-9.]/, "") |> Decimal.parse
   end
 
   @spec fetch_store_id :: integer
