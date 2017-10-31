@@ -2,7 +2,7 @@ defmodule Cognac.Product do
   use Ecto.Schema
   import Ecto.Changeset
   alias Cognac.Product
-
+  @type t :: %__MODULE__{}
 
   schema "products" do
     field :body, :string

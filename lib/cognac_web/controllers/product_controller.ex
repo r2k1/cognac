@@ -6,6 +6,11 @@ defmodule CognacWeb.ProductController do
     render conn, "index.html", products: products
   end
 
+  def all(conn, _params) do
+    products = Cognac.Products.all_products()
+    render conn, "index.html", products: products
+  end
+
   def show(conn, %{"id" => id}) do
     product = Cognac.Products.get_product!(id)
     render conn, "show.html", product: product

@@ -17,6 +17,7 @@ defmodule CognacWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", ProductController, :index
+    get "/all", ProductController, :all
     resources "/products", ProductController
   end
 

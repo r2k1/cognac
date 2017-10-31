@@ -18,6 +18,10 @@ defmodule Cognac.Products do
     Repo.all(query)
   end
 
+  def all_products do
+    Repo.all(Product)
+  end
+
   def get_product!(id) do
     Product
     |> Repo.get!(id)
@@ -39,7 +43,7 @@ defmodule Cognac.Products do
       product ->
         query = from p in Cognac.Product.Price,
           where: p.store_id == ^attrs.store_id and p.product_id == ^product.id
-        attrs = Map.merge(attrs, %{ product_id: product.id })
+        attrs = Map.merge(attrs, %{product_id: product.id})
         Cognac.Repo.one(query) || %Cognac.Product.Price{}
         |> Cognac.Product.Price.changeset(attrs)
         |> Cognac.Repo.insert_or_update!()
@@ -51,12 +55,10 @@ defmodule Cognac.Products do
   """
   @spec find_by_name(binary) :: Product.t | nil
   def find_by_name(name) do
-    # TODO: extract levenshtein function
-    # levenshtein(text source, text target, int ins_cost, int del_cost, int sub_cost) returns int
-    query = from p in Cognac.Product,
+    query = from p in Product,
             limit: 1,
-            where: fragment("levenshtein(lower(?), lower(?), 10, 1, 40)", ^name, p.name) < 200,
-            order_by: [asc: fragment("levenshtein(lower(?), lower(?), 10, 1, 40)", ^name, p.name)]
+            where: fragment("? % ?", p.name, ^name),
+            order_by: fragment("similarity(?, ?) DESC", p.name, ^name)
     Cognac.Repo.one(query)
   end
 end

@@ -9,6 +9,8 @@
   <%= for price <- @product.prices do %>
     <tr>
       <td><%= price.store.name %></td>
+      <td><%= price.name %></td>
+      <td><%= price.amount %></td>
       <td><%= price.amount %></td>
     </tr>
   <% end %>

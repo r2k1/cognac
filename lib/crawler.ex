@@ -1,31 +1,27 @@
 defmodule Crawler do
   require Logger
-  use GenServer
-  @moduledoc """
-  Web spider
-  """
 
-  def start_link do
-    GenServer.start_link(__MODULE__, %{})
+  def crawl(store) do
+    urls = store.product_urls
+    |> Enum.reject(fn(x) -> x == nil end)
+    |> Enum.uniq
+    prices = urls 
+    |> Enum.map(fn(url) -> parse(store, url) end)
+    |> Enum.reject(fn(x) -> x == nil end)
+    |> Enum.uniq
+    Logger.info("Proccessed #{Enum.count(urls)} product pages from #{store}")
+    Logger.info("Updated #{Enum.count(prices)} items from #{store}")
+    prices
   end
 
-  def init(state) do
-    Logger.info('Init crawler')
-    schedule_work() # Schedule work to be performed on start
-    {:ok, state}
-  end
-
-  def handle_info(:work, state) do
-    # Do the desired work here
-    # Logger.info('Loop')
-    schedule_work() # Reschedule once more
-    {:noreply, state}
-  end
-
-  defp schedule_work() do
-    Process.send_after(self(), :work, 1 * 1000) # In 2 hours
-  end
-
-  defp initial_queue() do
+  def parse(store, url) do
+    page = Crawler.PageLoader.get!(url)
+    Cognac.Products.insert_or_update_price(%{
+      name: store.product_name(page.body),
+      store_id: store.store_id,
+      url: page.url,
+      amount: store.product_price(page.body),
+      currency: store.currency
+    })
   end
 end
