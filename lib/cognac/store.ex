@@ -8,6 +8,7 @@ defmodule Cognac.Store do
     field :host, :string
     field :name, :string
     field :homepage, :string
+    has_many :product_prices, Cognac.Product.Price, on_delete: :delete_all
 
     timestamps()
   end

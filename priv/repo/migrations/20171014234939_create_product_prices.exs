@@ -6,9 +6,10 @@ defmodule Cognac.Repo.Migrations.CreateProductPrices do
       add :amount, :decimal, precision: 12, scale: 2
       add :currency, :string, length: 3
       add :in_stock, :boolean
-      add :product_id, references(:products, on_delete: :nothing)
-      add :store_id, references(:stores, on_delete: :nothing)
-      add :page_id, references(:pages, on_delete: :nothing)
+      add :product_id, references(:products, on_delete: :delete_all)
+      add :store_id, references(:stores, on_delete: :delete_all)
+      add :name, :string
+      add :url, :string
 
       timestamps()
     end

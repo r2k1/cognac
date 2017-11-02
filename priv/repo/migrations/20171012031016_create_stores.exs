@@ -10,5 +10,8 @@ defmodule Cognac.Repo.Migrations.CreateStores do
       timestamps()
     end
 
+    create unique_index(:stores, [:host])
+    
+
   end
 end

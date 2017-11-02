@@ -1,6 +1,5 @@
 defmodule Cognac.Repo.Migrations.CreateCategory do
   use Ecto.Migration
-  import Ecto.Query
 
   def change do
     create table(:categories) do
