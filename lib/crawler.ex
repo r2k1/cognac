@@ -1,9 +1,10 @@
 defmodule Crawler do
   require Logger
 
+  @spec crawl(module) :: list(%Cognac.Product.Price{})
   def crawl(store_module) do
     urls = store_module.product_urls
-    store = urls |> Enum.at(0) |> Cognac.Stores.find_by_url(url)
+    store = urls |> Enum.at(0) |> Cognac.Stores.find_by_url
     |> Enum.reject(fn(x) -> x == nil end)
     |> Enum.uniq
     prices = urls 
@@ -15,6 +16,7 @@ defmodule Crawler do
     prices
   end
 
+  @spec parse(module, %Cognac.Store{}, binary) :: %Cognac.Product{} | nil
   def parse(store_module, store, url) do
     case Crawler.PageLoader.get(url) do
       {:ok, page} -> create_price(store_module, store, page)
@@ -22,6 +24,7 @@ defmodule Crawler do
     end
   end
 
+  @spec create_price(module, %Cognac.Store{}, %Cognac.Page{}) :: %Cognac.Product{} | nil
   defp create_price(store_module, store, page) do
     Cognac.Products.insert_or_update_price(%{
       name: store_module.product_name(page.body),
