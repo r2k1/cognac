@@ -25,7 +25,7 @@ defmodule Crawler.Store.MobileStation do
   end
   
   def product_urls do
-    Crawler.PageLoader.load!("http://www.mobilestation.co.nz/index.php/catalog/seo_sitemap/product/").body
+    pages_count = Crawler.PageLoader.load!("http://www.mobilestation.co.nz/index.php/catalog/seo_sitemap/product/").body
     |> Floki.find("a.last")
     |> Enum.at(0)
     |> Floki.text
