@@ -47,6 +47,7 @@ defmodule Cognac.Mixfile do
       {:httpoison, "~> 0.13"},
       {:floki, "~> 0.18.0"},
       {:poolboy, "~> 1.5.1"},
+      {:que, "~> 0.4.1"},
       {:dialyxir, "~> 0.5.0", only: [:dev], runtime: false}
     ]
   end
