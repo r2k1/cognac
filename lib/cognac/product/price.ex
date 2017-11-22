@@ -18,7 +18,7 @@ defmodule Cognac.Product.Price do
   @doc false
   def changeset(%Price{} = price, attrs) do
     price
-    |> cast(attrs, [:amount, :currency, :url, :name, :in_stock, :store_id])
-    |> validate_required([:amount, :currency, :url, :name, :store_id])
+    |> cast(attrs, [:amount, :currency, :url, :name, :in_stock, :store_id, :product_id])
+    |> validate_required([:amount, :currency, :url, :name, :store_id, :product_id])
   end
 end

@@ -43,7 +43,7 @@ defmodule Crawler.PageLoader do
   @spec load(binary) :: response
   def load(url) do
     case HTTPoison.get(url, %{}, hackney: [follow_redirect: true, pool: :default]) do
-      {:ok, response} -> proccess_response(response)
+      {:ok, response} -> proccess_response(url, response)
       {:error, error} -> {:error, error.reason}
     end
   end
@@ -63,22 +63,22 @@ defmodule Crawler.PageLoader do
     end
   end
 
-  @spec proccess_response(HTTPoison.Response.t) :: {:ok, Cognac.Page.t} | {:error, atom} 
-  defp proccess_response(response) do
+  @spec proccess_response(binary, HTTPoison.Response.t) :: {:ok, Cognac.Page.t} | {:error, atom} 
+  defp proccess_response(url, response) do
     case response.status_code do
       x when x < 200 or x >= 300 -> {:error, :unsuccessful_response}
       _ ->
-        {:ok, update_or_create_page(response)}
+        {:ok, update_or_create_page(url, response)}
     end
   end
 
-  @spec update_or_create_page(HTTPoison.Response.t) :: Cognac.Page.t
-  defp update_or_create_page(response) do
+  @spec update_or_create_page(binary, HTTPoison.Response.t) :: Cognac.Page.t
+  defp update_or_create_page(url, response) do
     query = from p in Cognac.Page, where: p.url == ^response.request_url
     Cognac.Repo.one(query) || %Cognac.Page{}
     |> Cognac.Page.changeset(%{
       status_code: response.status_code,
-      url: response.request_url,
+      url: url,
       body: strip_utf(response.body),
       headers: to_map(response.headers),
       visited_at: NaiveDateTime.utc_now
